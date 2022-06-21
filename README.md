@@ -1,4 +1,4 @@
-## contract deployed to: 0x377fCF26A2fE89be7dBfb54FF82F29b48a9a5c81
+## contract deployed to: 0xF37ed6b6742De74F473A2dCDF5108e7e4A52DA2D
 ### chain uri: https://speedy-nodes-nyc.moralis.io/509a6df89113f86bf435b88b/bsc/testnet
 
 
