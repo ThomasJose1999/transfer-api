@@ -11,7 +11,7 @@ contract transfer{
         require (value < address(this).balance, "contract doesn't have enough balance");
         addr.transfer(value);
     }
-
+    fallback() external payable {}
     receive() external payable { }
 
     function balanceOfContract () public view returns(uint256){
