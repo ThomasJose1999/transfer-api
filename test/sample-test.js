@@ -50,11 +50,11 @@ describe("Transfer Contract", function () {
     it("should revert if the contract is sending money to non existing account", async ()=>{
       await addr1.sendTransaction({
         to: transfer.address,
-        value: ethers.utils.parseEther("10.0"),
+        value: ethers.utils.parseEther("0.01"),
         
       });
       let contractBal =  parseInt(await transfer.balanceOfContract());
-      expect(contractBal).to.equal(parseInt(ethers.utils.parseEther("10.0")));
+      expect(contractBal).to.equal(parseInt(ethers.utils.parseEther("0.01")));
       await expect(transfer.sendMoney("0x617F2E2fD72FD9D5503", 100)).to.be.reverted;
 
     });

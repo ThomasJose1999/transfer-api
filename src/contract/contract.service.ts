@@ -13,23 +13,10 @@ let secret = require("../../secret.json");
 
 @Injectable()
 export class ContractServices {
-    private transferContract: Contract;
+    // private transferContract: Contract;
     
     async contructor(connectionService: ConnectionService) {
         // this.transferContract = this.getTransferContract();
-        console.log("Hello There! ")
-        this.transferContract = await connectionService.launchToContract(contractAddress,contractAbi);
-        // try {
-            
-        //     const provider = new ethers.providers.JsonRpcProvider("https://speedy-nodes-nyc.moralis.io/509a6df89113f86bf435b88b/bsc/testnet");
-        //     const signer = provider.getSigner();
-
-        //     this.transferContract = new ethers.Contract(contractAddress, contractAbi, signer);
-        //     console.log(this.transferContract,"transfercontract constructor ###################")
-        //     // return connectionService.launchToContract(TransferContractAddress, TransferContractAbi);
-        //   } catch (error) {
-        //     throw new Error('Unable to connect to transfer contract');
-        //   }
     }
 
     async getBalance(): Promise<{}> {
@@ -53,14 +40,26 @@ export class ContractServices {
         try{
             const provider = new ethers.providers.JsonRpcProvider(secret.uri, { name: 'binance', chainId: 97});
             const signer = provider.getSigner(_signer);
-            let value = parseInt(_value);
+            // console.log(signer);
+            let value = ethers.utils.parseEther(_value);
             let con = new Contract(contractAddress, contractAbi, signer);
             let address1 = await ethers.utils.getAddress(_address);
-            console.log(address1,value, "address and value");
-            await con.sendMoney(address1, value);
+            // console.log(address1,value, "address and value");
+            let overrides = {
+
+                // The maximum units of gas for the transaction to use
+                gasLimit: 90000,
+            
+                // The price (in wei) per unit of gas
+                gasPrice: ethers.utils.parseUnits('9.0', 'gwei'),
+            
+        
+            
+            };
+            let tx = await con.sendMoney(address1, value, overrides);
+            console.log(tx.hash);
             return "Transfer was successful";
         } catch(error){
-            
             throw new Error('Unable to Transact');
         }
     }
