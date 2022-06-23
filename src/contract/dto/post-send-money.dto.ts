@@ -1,5 +1,5 @@
 export class SendMoneyDto {
-    signer: string;
+    signerPrivateKey: string;
     address: string;
     value: string;
 }

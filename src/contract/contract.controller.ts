@@ -4,6 +4,7 @@ import { ContractServices } from './contract.service';
 // import { IsAddressPipe } from '../common/validation/is-address.pipe';
 import { SendMoneyDto } from './dto/post-send-money.dto';
 const { ethers } = require("hardhat");
+let secret = require("../../secret.json");
 
 
 
@@ -17,7 +18,8 @@ export class ContractController {
   }
 
   @Post('send-money')
-  async sendTransaction(@Body() sendMoney: SendMoneyDto): Promise<string> {
-    return this.contractServices.sendTransaction(sendMoney.signer, sendMoney.address, sendMoney.value);
+  async sendTransaction(@Body() sendMoney: SendMoneyDto): Promise<{}> {
+   
+    return this.contractServices.sendTransaction(sendMoney.signerPrivateKey, sendMoney.address, sendMoney.value);
   }
 }
