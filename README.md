@@ -1,11 +1,30 @@
 ## contract deployed to: 0xF37ed6b6742De74F473A2dCDF5108e7e4A52DA2D
 ### chain uri: https://speedy-nodes-nyc.moralis.io/509a6df89113f86bf435b88b/bsc/testnet
 
+## API end-points
+* http://localhost:3000/contract/balance     : returns balance of contract as Json ``` {"balance":"100998498000000000"} ``` Note that the balance is in wei .
+* http://localhost:3000/contract/send-money  : returns json ``` {
+    "status": "success",
+    "hash": "0xf68daf4c41094f1846a3c6302281366a0d1c7a0e73a6be035fd7f622e2017552"
+} ```
+if the transaction was successfull.
+
+
 ## Keep in mind:
 * copy paste your key in ./secret.json
 * copy the address of the contract after deployment to config.js
 * copy the abi to the config.js
 
+## How to run 
+* copy paste your private key of your account in bsc test net to ./secret.json
+* run  ```npm install```
+* run ``` npm runs start:dev ``` 
+* go to http://localhost:3000/contract/balance in your browser to check the contract balance
+* send a post request to http://localhost:3000/contract/send-money with req body as  ``` {
+    "signerPrivateKey": "private key of your account", 
+    "address": " address of the account you want to send the money ",
+    "value": "0.0000001"    // example value where "1.0" being one token.
+} ```
 
 
 
