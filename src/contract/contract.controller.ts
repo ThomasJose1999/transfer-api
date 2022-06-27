@@ -19,7 +19,6 @@ export class ContractController {
 
   @Post('send-money')
   async sendTransaction(@Body() sendMoney: SendMoneyDto): Promise<{}> {
-   
     return this.contractServices.sendTransaction(sendMoney.signerPrivateKey, sendMoney.address, sendMoney.value);
   }
 }
