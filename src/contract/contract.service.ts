@@ -24,7 +24,7 @@ export class ContractServices {
         }
       }
 
-    async sendTransaction(_signer_private_key:string,_address:string, _value: string): Promise<{}> {
+    async sendTransaction(_signer_private_key:string,_address:string, _value: string): Promise<any> {
         
         
         try{
@@ -39,26 +39,14 @@ export class ContractServices {
                 data : encodedData,
                 gas : 100000
             }
-            const signPromise = web3.eth.accounts.signTransaction(tx, _signer_private_key);
-            
-            signPromise.then((signedTx) => {
-
-                const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
-                sentTx.on("receipt", receipt => {
-                console.log("transaction successful");
-                });
-                sentTx.on("error", err => {
-                    console.log(err)
-                 
-                });
-              }).catch((err) => {
-                console.log(err)
-              });
-              return { success: true }
+            const signPromise = await web3.eth.accounts.signTransaction(tx, _signer_private_key);
+            const sentTx = await web3.eth.sendSignedTransaction(signPromise.raw || signPromise.rawTransaction);
+            console.log("transaction successful")
+            return {success:true, txHash: sentTx.transactionHash}
             
         } catch(error){
-            console.log(error);
-            throw new Error('Unable to Transact');
+            console.log(error)
+            return {success: false}
         }
     }
 
