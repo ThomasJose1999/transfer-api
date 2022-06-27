@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Contract } from "ethers";
-const { ethers } = require("hardhat");
 import { contractAddress, contractAbi } from '../../config';
 var Web3 = require('web3');
 let secret = require("../../secret.json");
-var Tx = require('ethereumjs-tx').Transaction;
 
 @Injectable()
 export class ContractServices {
@@ -33,10 +30,7 @@ export class ContractServices {
         try{
             const web3 = new Web3(new Web3.providers.HttpProvider(secret.uri, { name: 'binance', chainId: 97}));
             const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
-            let toAddress = await ethers.utils.getAddress(_address);
-            console.log(web3.utils.isAddress(toAddress))
             let value = web3.utils.toWei(_value, 'ether');
-            console.log(await web3.eth.getGasPrice());
             
             let encodedData = await contractInstance.methods.sendMoney(_address,value).encodeABI()
             var tx = {
@@ -51,7 +45,7 @@ export class ContractServices {
 
                 const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
                 sentTx.on("receipt", receipt => {
-                //   console.log(receipt);
+                console.log("transaction successful");
                 });
                 sentTx.on("error", err => {
                     console.log(err)
@@ -60,11 +54,7 @@ export class ContractServices {
               }).catch((err) => {
                 console.log(err)
               });
-            
-            
               return { success: true }
-            
-        
             
         } catch(error){
             console.log(error);
