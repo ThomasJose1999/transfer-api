@@ -4,8 +4,7 @@
 ## API end-points
 * http://localhost:3000/contract/balance     : returns balance of contract as Json ``` {"balance":"100998498000000000"} ``` Note that the balance is in wei .
 * http://localhost:3000/contract/send-money  : returns json ``` {
-    "status": "success",
-    "hash": "0xf68daf4c41094f1846a3c6302281366a0d1c7a0e73a6be035fd7f622e2017552"
+    "success": true
 } ```
 if the transaction was successfull.
 
